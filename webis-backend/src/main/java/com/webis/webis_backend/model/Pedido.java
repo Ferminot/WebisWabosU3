@@ -1,7 +1,6 @@
 package com.webis.webis_backend.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "pedidos")
@@ -19,12 +18,9 @@ public class Pedido {
     @Column(name = "notas_adicionales")
     private String notasAdicionales;
 
-    private LocalDate fechaPedido;
-
     private int total;
 
     // Getters y Setters
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -42,9 +38,6 @@ public class Pedido {
 
     public String getNotasAdicionales() { return notasAdicionales; }
     public void setNotasAdicionales(String notasAdicionales) { this.notasAdicionales = notasAdicionales; }
-
-    public LocalDate getFechaPedido() { return fechaPedido; }
-    public void setFechaPedido(LocalDate fechaPedido) { this.fechaPedido = fechaPedido; }
 
     public int getTotal() { return total; }
     public void setTotal(int total) { this.total = total; }

@@ -14,6 +14,16 @@ public class Planta {
     private int valor;
     private int stock;
 
+    @Column(length = 1000)
+    private String descripcion;
+
+    @Column(name = "img_principal")
+    private String imgPrincipal;
+
+    @Column(name = "img_hover")
+    private String imgHover;
+
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -40,5 +50,29 @@ public class Planta {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getImgPrincipal() {
+        return imgPrincipal;
+    }
+
+    public void setImgPrincipal(String imgPrincipal) {
+        this.imgPrincipal = imgPrincipal;
+    }
+
+    public String getImgHover() {
+        return imgHover;
+    }
+
+    public void setImgHover(String imgHover) {
+        this.imgHover = imgHover;
     }
 }

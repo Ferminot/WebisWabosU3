@@ -14,6 +14,9 @@ public class Maceta {
     private int valor;
     private int stock;
 
+    private String imgPrincipal; // Nueva columna para la imagen principal
+
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -40,5 +43,13 @@ public class Maceta {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getImgPrincipal() {
+        return imgPrincipal;
+    }
+
+    public void setImgPrincipal(String imgPrincipal) {
+        this.imgPrincipal = imgPrincipal;
     }
 }

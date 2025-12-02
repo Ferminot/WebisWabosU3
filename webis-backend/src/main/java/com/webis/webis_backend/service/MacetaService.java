@@ -25,17 +25,6 @@ public class MacetaService {
         return macetaRepository.save(maceta);
     }
 
-    public Maceta actualizarMaceta(Long id, Maceta macetaActualizada) {
-        Maceta maceta = macetaRepository.findById(id).orElse(null);
-        if (maceta != null) {
-            maceta.setNombre(macetaActualizada.getNombre());
-            maceta.setValor(macetaActualizada.getValor());
-            maceta.setStock(macetaActualizada.getStock());
-            return macetaRepository.save(maceta);
-        }
-        return null;
-    }
-
     public void eliminarMaceta(Long id) {
         macetaRepository.deleteById(id);
     }

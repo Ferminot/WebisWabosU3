@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/macetas")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class MacetaController {
 
     @Autowired
@@ -32,7 +32,16 @@ public class MacetaController {
 
     @PutMapping("/{id}")
     public Maceta actualizarMaceta(@PathVariable Long id, @RequestBody Maceta macetaActualizada) {
-        return macetaService.actualizarMaceta(id, macetaActualizada);
+        Maceta maceta = macetaService.obtenerMacetaPorId(id);
+        if (maceta != null) {
+            maceta.setNombre(macetaActualizada.getNombre());
+            maceta.setValor(macetaActualizada.getValor());
+            maceta.setStock(macetaActualizada.getStock());
+            maceta.setImgPrincipal(macetaActualizada.getImgPrincipal()); // <- Nuevo
+
+            return macetaService.guardarMaceta(maceta);
+        }
+        return null;
     }
 
     @DeleteMapping("/{id}")

@@ -30,6 +30,8 @@ public class ServicioService {
         if (servicio != null) {
             servicio.setNombre(servicioActualizado.getNombre());
             servicio.setValor(servicioActualizado.getValor());
+            servicio.setDescripcion(servicioActualizado.getDescripcion());
+            servicio.setImg_principal(servicioActualizado.getImg_principal());
             return servicioRepository.save(servicio);
         }
         return null;

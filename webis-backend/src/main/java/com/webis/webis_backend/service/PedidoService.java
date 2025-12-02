@@ -40,13 +40,13 @@ public class PedidoService {
                     pedido.setTelefono(pedidoActualizado.getTelefono());
                     pedido.setDireccion(pedidoActualizado.getDireccion());
                     pedido.setNotasAdicionales(pedidoActualizado.getNotasAdicionales());
-                    pedido.setFechaPedido(pedidoActualizado.getFechaPedido());
                     pedido.setTotal(pedidoActualizado.getTotal());
                     return pedidoRepository.save(pedido);
                 })
                 .orElse(null);
     }
 
+    // Eliminar un pedido
     public boolean eliminarPedido(Long id) {
         if (pedidoRepository.existsById(id)) {
             pedidoRepository.deleteById(id);

@@ -1,50 +1,44 @@
 package com.webis.webis_backend.controller;
 
 import com.webis.webis_backend.model.Pedido;
-import com.webis.webis_backend.service.PedidoService;
+import com.webis.webis_backend.security.JwtUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedidos")
-@CrossOrigin(origins = "*") // Permite peticiones desde tu frontend Vite
+@CrossOrigin(origins = "*")
 public class PedidoController {
 
-    private final PedidoService pedidoService;
+    private final JwtUtils jwtUtils;
 
-    public PedidoController(PedidoService pedidoService) {
-        this.pedidoService = pedidoService;
+    public PedidoController(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
     }
 
-    // GET: obtener todos los pedidos
-    @GetMapping
-    public List<Pedido> obtenerPedidos() {
-        return pedidoService.obtenerPedidos();
-    }
-
-    // GET: obtener pedido por ID
-    @GetMapping("/{id}")
-    public Pedido obtenerPedidoPorId(@PathVariable Long id) {
-        return pedidoService.obtenerPedidoPorId(id).orElse(null);
-    }
-
-    // POST: crear un pedido
     @PostMapping
-    public Pedido crearPedido(@RequestBody Pedido pedido) {
-        return pedidoService.crearPedido(pedido);
-    }
+    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido,
+                                         @RequestHeader(value = "Authorization", required = false) String authHeader) {
 
-    // PUT: actualizar un pedido
-    @PutMapping("/{id}")
-    public Pedido actualizarPedido(@PathVariable Long id, @RequestBody Pedido pedido) {
-        return pedidoService.actualizarPedido(id, pedido);
-    }
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("Debes iniciar sesión para hacer un pedido");
+        }
 
-    // DELETE: eliminar un pedido
-    @DeleteMapping("/{id}")
-    public String eliminarPedido(@PathVariable Long id) {
-        boolean eliminado = pedidoService.eliminarPedido(id);
-        return eliminado ? "Pedido eliminado" : "Pedido no encontrado";
+        String token = authHeader.substring(7);
+
+        // Usamos tus métodos de JwtUtils
+        if (!jwtUtils.validarJwt(token)) {
+            return ResponseEntity.status(401).body("Token inválido o expirado");
+        }
+
+        String correoUsuario = jwtUtils.getUsernameFromJwt(token);
+
+        // Asociamos el pedido al usuario logueado
+        pedido.setCorreo(correoUsuario);
+
+        // Aquí guardarías el pedido en la base de datos
+        // pedidoRepository.save(pedido);
+
+        return ResponseEntity.ok("Pedido realizado por: " + correoUsuario);
     }
 }
